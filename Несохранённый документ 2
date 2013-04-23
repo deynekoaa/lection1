@@ -1,0 +1,17 @@
+TARGET=readline
+
+CFLAGS ?= -O1
+
+all: $(TARGET)
+
+$(TARGET): help.o readline.o worker.o
+	$(CC) $(CFLAGS) help.o readline.o worker.o -o readline -lreadline
+
+help.o: help.c readline.h
+	$(CC) $(CFLAGS) -c help.c
+readline.o: readline.c readline.h
+	$(CC) $(CFLAGS) -c readline.c
+worker.o: worker.c readline.h
+	$(CC) $(CFLAGS) -c worker.c
+clean:
+	rm -fr *.o $(TARGET)
